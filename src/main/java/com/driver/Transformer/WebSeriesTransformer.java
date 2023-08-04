@@ -4,12 +4,13 @@ import com.driver.EntryDto.WebSeriesEntryDto;
 import com.driver.model.WebSeries;
 
 public class WebSeriesTransformer {
-    public static WebSeries convertDtoToEntity(WebSeriesEntryDto webSeriesEntryDto) {
+    public static WebSeries convertDtoToEntity(WebSeriesEntryDto entryDto) {
         WebSeries webSeries=new WebSeries();
-        webSeries.setSeriesName(webSeriesEntryDto.getSeriesName());
-        webSeries.setAgeLimit(webSeriesEntryDto.getAgeLimit());
-        webSeries.setRating(webSeriesEntryDto.getRating());
-        webSeries.setSubscriptionType(webSeriesEntryDto.getSubscriptionType());
+        webSeries.setSeriesName(entryDto.getSeriesName());
+        webSeries.setAgeLimit(entryDto.getAgeLimit());
+        webSeries.setRating(entryDto.getRating());
+        webSeries.setSubscriptionType(entryDto.getSubscriptionType());
+
         return webSeries;
     }
 }

@@ -51,6 +51,7 @@ public class WebSeriesService {
         }
         int seriesCount=list.size();
         productionHouseRating=productionHouseRating/seriesCount;
+        productionHouse.setRatings(productionHouseRating);
         productionHouseRepository.save(productionHouse);
 
         return webSeries.getId();

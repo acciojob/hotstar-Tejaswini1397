@@ -56,45 +56,26 @@ public class SubscriptionService {
         //In all other cases just try to upgrade the subscription and tell the difference of price that user has to pay
         //update the subscription in the repository
         User user=userRepository.findById(userId).get();
-        if(user.getSubscription().getSubscriptionType().toString().equals("ElITE")){
+        if(user.getSubscription().getSubscriptionType().toString().equals("ELITE")){
             throw new Exception("Already the best Subscription");
         }
+
         Subscription subscription=user.getSubscription();
         Integer previousFair=subscription.getTotalAmountPaid();
         Integer currentFair;
         if(subscription.getSubscriptionType().equals(SubscriptionType.BASIC)){
             subscription.setSubscriptionType(SubscriptionType.PRO);
-            currentFair=previousFair+300+(50*subscription.getNoOfScreensSubscribed());
-        }else{
+            currentFair =previousFair+300+(50*subscription.getNoOfScreensSubscribed());
+        }else {
             subscription.setSubscriptionType(SubscriptionType.ELITE);
             currentFair=previousFair+200+(100*subscription.getNoOfScreensSubscribed());
         }
+
         subscription.setTotalAmountPaid(currentFair);
         user.setSubscription(subscription);
         subscriptionRepository.save(subscription);
 
         return currentFair-previousFair;
-//        User user=userRepository.findById(userId).get();
-//        if(user.getSubscription().getSubscriptionType().toString().equals("ELITE")){
-//            throw new Exception("Already the best Subscription");
-//        }
-//
-//        Subscription subscription=user.getSubscription();
-//        Integer previousFair=subscription.getTotalAmountPaid();
-//        Integer currentFair;
-//        if(subscription.getSubscriptionType().equals(SubscriptionType.BASIC)){
-//            subscription.setSubscriptionType(SubscriptionType.PRO);
-//            currentFair =previousFair+300+(50*subscription.getNoOfScreensSubscribed());
-//        }else {
-//            subscription.setSubscriptionType(SubscriptionType.ELITE);
-//            currentFair=previousFair+200+(100*subscription.getNoOfScreensSubscribed());
-//        }
-//
-//        subscription.setTotalAmountPaid(currentFair);
-//        user.setSubscription(subscription);
-//        subscriptionRepository.save(subscription);
-//
-//        return currentFair-previousFair;
 
     }
 

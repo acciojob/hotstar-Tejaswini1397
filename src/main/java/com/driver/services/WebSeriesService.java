@@ -33,25 +33,51 @@ public class WebSeriesService {
         if(checkSeries!=null){
             throw new Exception("Series is already present");
         }
-        int id=webSeriesEntryDto.getProductionHouseId();
-        Optional<ProductionHouse> productionHouseOptional=productionHouseRepository.findById(id);
-        ProductionHouse productionHouse=productionHouseOptional.get();
-        if(productionHouse==null){
+//        int id=webSeriesEntryDto.getProductionHouseId();
+//        Optional<ProductionHouse> productionHouseOptional=productionHouseRepository.findById(id);
+//        ProductionHouse productionHouse=productionHouseOptional.get();
+//        if(productionHouse==null){
+//            throw new ProductionError("Production house is not present");
+//        }
+//        webSeries.setProductionHouse(productionHouse);
+//        webSeries=webSeriesRepository.save(webSeries);
+//
+//        List<WebSeries>list=productionHouse.getWebSeriesList();
+//        list.add(webSeries);
+//
+//        double productionHouseRating=0;
+//        for(WebSeries web:list){
+//            productionHouseRating+=web.getRating();
+//        }
+//        int seriesCount=list.size();
+//        productionHouseRating=productionHouseRating/seriesCount;
+//        productionHouse.setRatings(productionHouseRating);
+//        productionHouseRepository.save(productionHouse);
+//
+//        return webSeries.getId();
+
+        int id = webSeriesEntryDto.getProductionHouseId();
+        Optional<ProductionHouse> productionHouseOpt = productionHouseRepository.findById(id);
+        ProductionHouse productionHouse = productionHouseOpt.get();
+        if(productionHouse == null){
             throw new ProductionError("Production house is not present");
         }
+
         webSeries.setProductionHouse(productionHouse);
-        webSeries=webSeriesRepository.save(webSeries);
+        webSeries = webSeriesRepository.save(webSeries);
 
-        List<WebSeries>list=productionHouse.getWebSeriesList();
-        list.add(webSeries);
+        List<WebSeries> seriesList = productionHouse.getWebSeriesList();
+        seriesList.add(webSeries);
 
-        double productionHouseRating=0;
-        for(WebSeries web:list){
-            productionHouseRating+=web.getRating();
+        double productionHouseRating = 0;
+        for(WebSeries series : seriesList){
+            productionHouseRating += series.getRating();
         }
-        int seriesCount=list.size();
-        productionHouseRating=productionHouseRating/seriesCount;
+        int seriesCount = seriesList.size();
+        productionHouseRating = productionHouseRating / seriesCount;
+
         productionHouse.setRatings(productionHouseRating);
+
         productionHouseRepository.save(productionHouse);
 
         return webSeries.getId();
